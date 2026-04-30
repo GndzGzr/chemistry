@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Vibrant electric blue accent for N-type / interactive */
+  --color-electron: #00D4FF;
+  --color-electron-dim: #0891B2;
+  --color-electron-glow: rgba(0, 212, 255, 0.35);
+
+  /* Sharp vibrant red for P-type / holes */
+  --color-hole: #FF3B5C;
+  --color-hole-dim: #BE123C;
+  --color-hole-glow: rgba(255, 59, 92, 0.35);
+
+  /* High-contrast dark surfaces */
+  --color-surface: #050507;
+  --color-surface-2: #0C0C10;
+  --color-surface-3: #131318;
+  --color-surface-card: #101015;
+  --color-surface-hover: #18181F;
+
+  /* Borders */
+  --color-border: #1E1E28;
+  --color-border-subtle: #16161E;
+
+  /* Text hierarchy — crisp & high contrast */
+  --color-text: #F5F5F7;
+  --color-text-secondary: #A1A1AA;
+  --color-text-tertiary: #63636E;
+
+  /* Accent golds/yellows */
+  --color-glow-yellow: #FBBF24;
+  --color-success: #34D399;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-surface);
+  color: var(--color-text);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Reusable layout utilities ────────────────────── */
+
+.split-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  min-height: calc(100vh - 160px);
+  align-items: center;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .split-layout {
+    grid-template-columns: 5fr 7fr;
+    gap: 4rem;
+  }
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.section-label--cyan { color: var(--color-electron); }
+.section-label--yellow { color: var(--color-glow-yellow); }
+
+.guide-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.guide-list li {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.guide-list .num {
+  color: var(--color-electron);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.theory-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--color-text-tertiary);
+}
+
+.theory-text + .theory-text { margin-top: 0.75rem; }
+
+.section-divider {
+  width: 3rem;
+  height: 1px;
+  background: var(--color-border);
+  margin: 2.5rem 0;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  background: rgba(255,255,255,0.02);
+  color: var(--color-text-secondary);
+}
+.action-btn:hover { background: rgba(255,255,255,0.05); }
+
+.action-btn--active-cyan {
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--color-electron);
+  box-shadow: 0 0 24px var(--color-electron-glow);
+}
+.action-btn--active-red {
+  background: rgba(255, 59, 92, 0.08);
+  color: var(--color-hole);
+  box-shadow: 0 0 24px var(--color-hole-glow);
+}
+.action-btn--active-green {
+  background: rgba(34, 197, 94, 0.08);
+  color: #34D399;
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.2);
+}
+.action-btn--active-yellow {
+  background: rgba(251, 191, 36, 0.08);
+  color: var(--color-glow-yellow);
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.2);
+}
+
+.svg-canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.svg-canvas svg {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+}
+
+/* ── SVG Animation Keyframes ──────────────────────── */
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes dash-rotate {
+  to { stroke-dashoffset: -20; }
+}
+
+@keyframes bond-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-dash-rotate {
+  animation: dash-rotate 1s linear infinite;
+}
+
+.animate-bond-draw {
+  stroke-dasharray: 100;
+  animation: bond-draw 0.5s ease forwards;
+}
+
+.svg-transition {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
