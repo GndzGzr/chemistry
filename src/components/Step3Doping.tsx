@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactElement } from 'react';
 
 type DopantType = 'none' | 'phosphorus' | 'boron';
 const GRID = 3, SP = 130, OFF = 80;
@@ -45,7 +45,7 @@ export default function Step3Doping() {
       <div className="svg-canvas">
         <svg viewBox={`0 0 ${sz} ${sz}`}>
           {Array.from({ length: GRID }).map((_, r) => Array.from({ length: GRID }).map((_, c) => {
-            const p = gp(r, c); const els: JSX.Element[] = [];
+            const p = gp(r, c); const els: ReactElement[] = [];
             if (c < GRID - 1) { const q = gp(r, c + 1); els.push(<line key={`h${r}${c}`} x1={p.x + 30} y1={p.y} x2={q.x - 30} y2={q.y} stroke="var(--color-border)" strokeWidth="1.5" />); }
             if (r < GRID - 1) { const q = gp(r + 1, c); els.push(<line key={`v${r}${c}`} x1={p.x} y1={p.y + 30} x2={q.x} y2={q.y - 30} stroke="var(--color-border)" strokeWidth="1.5" />); }
             return els;
